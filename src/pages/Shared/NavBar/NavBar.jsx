@@ -33,13 +33,13 @@ const NavBar = () => {
             {navItems}
           </ul>
         </div>
-        <a className="btn btn-ghost normal-case text-xl">daisyUI</a>
+        <a className="btn btn-ghost normal-case text-4xl">Bistro Boss</a>
       </div>
       <div className="navbar-center hidden lg:flex">
         <ul className="menu menu-horizontal px-1">{navItems}</ul>
       </div>
       <div className="navbar-end">
-        <a className="btn">Button</a>
+        <a className="btn bg-orange-500 border-none px-8 uppercase text-white">Order</a>
       </div>
     </div>
   );
