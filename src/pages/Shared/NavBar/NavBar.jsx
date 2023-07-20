@@ -1,8 +1,10 @@
+import { Link } from "react-router-dom";
+
 const NavBar = () => {
   const navItems = (
     <>
-      <li><a>Home</a></li>
-      <li><a>About</a></li>
+      <li><Link to="/">Home</Link></li>
+      <li><Link to="/menu">Menu</Link></li>
       <li><a>Blog</a></li>
     </>
   );
@@ -39,7 +41,7 @@ const NavBar = () => {
         <ul className="menu menu-horizontal px-1">{navItems}</ul>
       </div>
       <div className="navbar-end">
-        <a className="btn bg-orange-500 border-none px-8 uppercase text-white">Order</a>
+        <a className="btn bg-orange-700 border-none px-8 uppercase text-white">Order</a>
       </div>
     </div>
   );
