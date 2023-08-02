@@ -12,9 +12,9 @@ import dessertImg from '../../../assets/menu/dessert-bg.jpeg'
 const Menu = () => {
   const [menu] = useMenu();
   const dessert = menu.filter(item => item.category === 'dessert');
+  const soup = menu.filter(item => item.category === 'soup');
   const salad = menu.filter(item => item.category === 'salad');
   const pizza = menu.filter(item => item.category === 'pizza');
-  const soup = menu.filter(item => item.category === 'soup');
   const offered = menu.filter(item => item.category === 'offered');
   return (
     <div>
@@ -27,7 +27,7 @@ const Menu = () => {
       <SectionTitle subHeading={"dont't miss"} heading={"today's offer"}></SectionTitle>
       <MenuCategory item={offered}></MenuCategory>
       {/* dessert item */}
-      <MenuCategory item={dessert} title={"dessert"} img={dessertImg}></MenuCategory>
+      <MenuCategory item={dessert} title="dessert" img={dessertImg}></MenuCategory>
       {/* pizza item */}
       <MenuCategory item={pizza} title={"pizza"} img={pizzaImg}></MenuCategory>
       {/* salad item */}
