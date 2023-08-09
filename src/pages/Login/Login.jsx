@@ -3,10 +3,15 @@ import authenticationImg from '../../assets/others/authentication2.png';
 import { loadCaptchaEnginge, LoadCanvasTemplate, validateCaptcha } from 'react-simple-captcha';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { useContext } from 'react';
+import { AuthContext } from '../../providers/AuthProviders';
+import { Link } from 'react-router-dom';
 const Login = () => {
 
     const captchaRef = useRef();
     const [desable, setdesable] = useState(true)
+
+    const {signIn} = useContext(AuthContext)
 
     const handleLogin = (event) => {
         event.preventDefault();
@@ -14,6 +19,12 @@ const Login = () => {
         const email = form.email.value;
         const password = form.password.value;
         console.log(email, password);
+
+        signIn(email,password)
+        .then(result => {
+          const user = result.user;
+          console.log(user)
+        })
     }
     useEffect(()=> {
         loadCaptchaEnginge(6);
@@ -81,6 +92,7 @@ const Login = () => {
             <div className="form-control mt-6">
               <input disabled={desable} className="btn btn-primary" type="submit" value="Login" />
             </div>
+            <p className='text-center'>New Here?<Link className='text-orange-400 font-bold' to='/signup'> Register Please</Link></p>
           </form>
         </div>
       </div>
