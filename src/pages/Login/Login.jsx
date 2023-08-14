@@ -5,13 +5,18 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useContext } from 'react';
 import { AuthContext } from '../../providers/AuthProviders';
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 const Login = () => {
 
     const captchaRef = useRef();
     const [desable, setdesable] = useState(true)
 
-    const {signIn} = useContext(AuthContext)
+    const {signIn} = useContext(AuthContext);
+
+    const navigate = useNavigate();
+    const location = useLocation();
+
+    const from = location.state?.from?.pathname || "/"; 
 
     const handleLogin = (event) => {
         event.preventDefault();
@@ -24,7 +29,9 @@ const Login = () => {
         .then(result => {
           const user = result.user;
           console.log(user)
+          toast("SignIn Successfully!");
         })
+        navigate(from, {replace: true});
     }
     useEffect(()=> {
         loadCaptchaEnginge(6);
@@ -81,6 +88,7 @@ const Login = () => {
                 <LoadCanvasTemplate />
               </label>
               <input
+                onBlur={handleValidateCaptcha}
                 ref={captchaRef}
                 type="text"
                 name='captcha'
@@ -88,7 +96,6 @@ const Login = () => {
                 className="input input-bordered"
               />
             </div>
-            <button onClick={handleValidateCaptcha} className="btn btn-outline btn-xs">validate</button>
             <div className="form-control mt-6">
               <input disabled={desable} className="btn btn-primary" type="submit" value="Login" />
             </div>

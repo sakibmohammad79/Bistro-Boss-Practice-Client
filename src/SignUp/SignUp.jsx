@@ -1,16 +1,37 @@
 import { Link } from 'react-router-dom';
 import signUpImg from '../assets/others/authentication2.png'
 import { useForm } from 'react-hook-form';
+import { useContext } from 'react';
+import { AuthContext } from '../providers/AuthProviders';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 const SignUp = () => {
+  const {createUser, updateUserProfile} = useContext(AuthContext);
     const {
         register,
         handleSubmit,
-        watch,
         formState: { errors },
+        reset
       } = useForm()
     
-      const onSubmit = (data) => console.log(data)
-      console.log(watch("example"))
+      const onSubmit = (data) =>{
+        console.log(data)
+        createUser(data.email, data.password)
+        .then(result => {
+          const createUser = result.user;
+          console.log(createUser);
+          toast("User Register Successfully!");
+          reset();
+          updateUserProfile(data.name, data.photoURL)
+          .then(result = () => {
+            const updateUserprofile = result.user;
+            console.log(updateUserprofile)
+          })
+        })
+      } 
+      
+      
   return (
     <div className="hero min-h-screen bg-base-200 rounded-lg m-4 md:m-12 p-2 md:p-12">
       <div className="hero-content flex-col lg:flex-row-reverse gap-8">
@@ -26,10 +47,11 @@ const SignUp = () => {
               <input
                 type="text"
                 name='name'
-                {...register("name")}
+                {...register("name", { required: true })}
                 placeholder="Name"
                 className="input input-bordered"
               />
+              {errors.name && <span className='text-red-600'>This field is required</span>}
             </div>
             <div className="form-control">
               <label className="label">
@@ -38,39 +60,61 @@ const SignUp = () => {
               <input
                 type="Email"
                 name='email'
-                {...register("email")}
+                {...register("email", { required: true })}
                 placeholder="Email"
                 className="input input-bordered"
               />
+              {errors.email && <span className='text-red-600'>This field is required</span>}
             </div>
             <div className="form-control">
               <label className="label">
                 <span className="label-text">Password</span>
               </label>
               <input
+            
                 type="password"
                 name='password'
-                {...register("password")}
+                {...register("password", { required: true,
+                   maxLength: 20,
+                    minLength: 6,
+                  pattern: /(?=.*[A-Z])(?=.*[!@#$&*])(?=.*[0-9])(?=.*[a-z])/})}
                 placeholder="password"
                 className="input input-bordered"
               />
+               {errors.password?.type === 'required' && <p className='text-red-600' role="alert">password is required</p>}
+              {errors.password?.type === "minLength" && <p className='text-red-600' role="alert">Password must be 6 characters</p>}
+              {errors.password?.type === "pattern" && <p className='text-red-600' role="alert">password have one upper case, one lower case, one digit and one special characters</p>}
               <label className="label">
                 <a href="#" className="label-text-alt link link-hover">
                   Forgot password?
                 </a>
               </label>
             </div>
-            <div className="form-control">
+            {/* <div className="form-control">
               <label className="label">
                 <span className="label-text">Confirm Password</span>
               </label>
               <input
                 type="password"
                 name='confirmpassword'
-                {...register("confirmpassword")}
+                {...register("confirmpassword", { required: true })}
                 placeholder="confirm password"
                 className="input input-bordered"
               />
+              {errors.confirmpassword && <span className='text-red-600'>This field is required</span>}
+            </div> */}
+            <div className="form-control">
+              <label className="label">
+                <span className="label-text">Photo URL</span>
+              </label>
+              <input
+                type="text"
+                name='photoURL'
+                {...register("photoURL", { required: true })}
+                placeholder="photoURL"
+                className="input input-bordered"
+              />
+              {errors.photoURL && <span className='text-red-600'>This field is required</span>}
             </div>
             <div className="form-control mt-6">
               <button className="btn btn-primary">SignUp</button>
@@ -79,6 +123,7 @@ const SignUp = () => {
           </form>
         </div>
       </div>
+      <ToastContainer />
     </div>
   );
 };
