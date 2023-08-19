@@ -1,23 +1,36 @@
 import { useContext } from "react";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../../providers/AuthProviders";
+import { FaShoppingCart } from 'react-icons/fa';
 
 const NavBar = () => {
-  const {user,logOut} = useContext(AuthContext);
+  const { user, logOut } = useContext(AuthContext);
   const handleSignOut = () => {
     logOut()
-    .then(() => {
-      
-    })
-    .catch((error) => {
-      console.log(error)
-    });
-  }
+      .then(() => {})
+      .catch((error) => {
+        console.log(error);
+      });
+  };
   const navItems = (
     <>
-      <li><Link to="/">Home</Link></li>
-      <li><Link to="/menu">Menu</Link></li>
-      <li><Link to="/order/salad">Order</Link></li>
+      <li>
+        <Link to="/">Home</Link>
+      </li>
+      <li>
+        <Link to="/menu">Menu</Link>
+      </li>
+      <li>
+        <Link to="/order/salad">Order</Link>
+      </li>
+      <li>
+        <Link to="/">
+          <div className="indicator">
+            <span className="indicator-item badge badge-secondary">+0</span>
+            <button className="btn btn-sm"><FaShoppingCart></FaShoppingCart></button>
+          </div>
+        </Link>
+      </li>
     </>
   );
   return (
@@ -47,21 +60,35 @@ const NavBar = () => {
             {navItems}
           </ul>
         </div>
-        <a className="btn btn-ghost normal-case text-2xl md:text-4xl ">Bistro Boss</a>
+        <a className="btn btn-ghost normal-case text-2xl md:text-4xl ">
+          Bistro Boss
+        </a>
       </div>
       <div className="navbar-center hidden lg:flex">
         <ul className="menu menu-horizontal px-1">{navItems}</ul>
       </div>
       <div className="navbar-end">
-        {
-          user ?
+        {user ? (
           <>
-            <img style={{height: '50px', width: '50px'}} className="rounded-full mr-2 md:mr-4" src={user?.photoURL} alt="" />
-            <Link onClick={handleSignOut}><a className="btn bg-orange-700 border-none px-6 uppercase text-white">signOut</a></Link>
-          </> 
-          :
-          <Link to="/login"><a className="btn bg-orange-700 border-none px-6 uppercase text-white">Login</a></Link>
-        }
+            <img
+              style={{ height: "50px", width: "50px" }}
+              className="rounded-full mr-2 md:mr-4"
+              src={user?.photoURL}
+              alt=""
+            />
+            <Link onClick={handleSignOut}>
+              <a className="btn bg-orange-700 border-none px-6 uppercase text-white">
+                signOut
+              </a>
+            </Link>
+          </>
+        ) : (
+          <Link to="/login">
+            <a className="btn bg-orange-700 border-none px-6 uppercase text-white">
+              Login
+            </a>
+          </Link>
+        )}
       </div>
     </div>
   );
