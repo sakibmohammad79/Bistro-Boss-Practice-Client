@@ -6,8 +6,10 @@ import 'react-toastify/dist/ReactToastify.css';
 import { useContext } from 'react';
 import { AuthContext } from '../../providers/AuthProviders';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
+import SocialLogin from '../../components/SocialLogin/SocialLogin';
 const Login = () => {
 
+    const [error, setError] = useState();
     const captchaRef = useRef();
     const [desable, setdesable] = useState(true)
 
@@ -30,8 +32,10 @@ const Login = () => {
           const user = result.user;
           console.log(user)
           toast("SignIn Successfully!");
+          navigate(from, {replace: true});
         })
-        navigate(from, {replace: true});
+        .catch(error => setError(error.message));
+        
     }
     useEffect(()=> {
         loadCaptchaEnginge(6);
@@ -100,7 +104,10 @@ const Login = () => {
               <input disabled={desable} className="btn btn-primary" type="submit" value="Login" />
             </div>
             <p className='text-center'>New Here?<Link className='text-orange-400 font-bold' to='/signup'> Register Please</Link></p>
+            
+            <p className='text-red-600 text-center'>{error}</p>
           </form>
+          <SocialLogin></SocialLogin>
         </div>
       </div>
       <ToastContainer />

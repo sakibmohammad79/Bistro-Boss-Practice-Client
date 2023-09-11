@@ -1,35 +1,51 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import signUpImg from '../assets/others/authentication2.png'
 import { useForm } from 'react-hook-form';
 import { useContext } from 'react';
 import { AuthContext } from '../providers/AuthProviders';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import SocialLogin from '../components/SocialLogin/SocialLogin';
+
 
 const SignUp = () => {
+  const navigate = useNavigate();
   const {createUser, updateUserProfile} = useContext(AuthContext);
     const {
         register,
         handleSubmit,
         formState: { errors },
         reset
-      } = useForm()
-    
-      const onSubmit = (data) =>{
-        console.log(data)
+      } = useForm() 
+
+      const onSubmit = (data) => {
         createUser(data.email, data.password)
-        .then(result => {
-          const createUser = result.user;
-          console.log(createUser);
-          toast("User Register Successfully!");
-          reset();
+        .then((result) => {
+          const loggedUser = result.user;
+          console.log(loggedUser);
+
           updateUserProfile(data.name, data.photoURL)
-          .then(result = () => {
-            const updateUserprofile = result.user;
-            console.log(updateUserprofile)
+
+          const saveUser = { name: data.name, email: data.email };
+          console.log(saveUser);
+
+          fetch("http://localhost:5000/users", {
+            method: "POST",
+            headers: {
+              "content-type": "application/json",
+            },
+            body: JSON.stringify(saveUser),
           })
-        })
-      } 
+            .then((res) => res.json())
+            .then((data) => {
+              if (data.insertedId) {
+                reset();
+                toast("User SignUp Successfully!")
+                navigate("/");
+              }
+            });
+        });
+      };
       
       
   return (
@@ -121,6 +137,8 @@ const SignUp = () => {
             </div>
             <p className='text-center'>Already have an acount?<Link to='/login' className='text-orange-400 font-bold'> Please Login</Link></p>
           </form>
+          <SocialLogin></SocialLogin>
+          
         </div>
       </div>
       <ToastContainer />

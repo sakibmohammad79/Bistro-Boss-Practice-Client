@@ -7,10 +7,11 @@ import Menu from "../pages/Menu/Menu/Menu";
 import Order from "../pages/Order/Order/Order";
 import Login from "../pages/Login/Login";
 import SignUp from "../SignUp/SignUp";
-// import PrivateRoute from "./PrivateRoute";
+import PrivateRoute from "./PrivateRoute";
 import Dashboard from "../Layout/Dashboard";
 import Mycart from "../pages/Dashboard/MyCart/Mycart";
 import Payment from "../pages/Dashboard/Payment/Payment";
+import AllUsers from "../pages/Dashboard/AllUsers/AllUsers";
 
   export const router = createBrowserRouter([
     {
@@ -41,7 +42,7 @@ import Payment from "../pages/Dashboard/Payment/Payment";
     },
     {
       path: 'dashboard',
-      element: <Dashboard></Dashboard>,
+      element: <PrivateRoute><Dashboard></Dashboard></PrivateRoute>,
       children: [
         {
           path: 'mycart',
@@ -50,6 +51,10 @@ import Payment from "../pages/Dashboard/Payment/Payment";
         {
           path: 'payment',
           element: <Payment></Payment>
+        },
+        {
+          path: 'allusers',
+          element: <AllUsers></AllUsers>
         }
       ]
     }

@@ -39,17 +39,18 @@ const Mycart = () => {
     }
 
   return (
-    <div>
+    <div className="w-[100%] md:w-full px-2 md:px-4">
       <Helmet>
         <title>Bistor Boss | My Cart</title>
       </Helmet>
-      <div className="flex gap-8 py-4 pl-4 md:pl-0">
+      <div className="flex justify-center items-center text-secondary gap-8 py-4 pl-4 md:pl-0">
         <h2 className="text-lg md:text-3xl font-bold uppercase">Total Items: {cart.length}</h2>
         <h2 className="text-lg md:text-3xl font-bold uppercase">Total Price: {TotalPrice}</h2>
+        <button className="btn btn-active btn-sm btn-primary">Pay</button>
       </div>
 
       <div className="overflow-x-auto">
-  <table className="table w-full">
+  <table  className="table">
     {/* head */}
     <thead>
       <tr>
@@ -64,12 +65,12 @@ const Mycart = () => {
         {
             cart.map((item, index) => <tr key={item.id}>
                 <th>
-                  {index}
+                  {index+1}
                 </th>
                 <td>
                   <div className="flex items-center space-x-3">
                     <div className="avatar">
-                      <div className="mask mask-squircle w-12 h-12">
+                      <div className="mask mask-squircle w-16 h-16">
                         <img src={item.image} alt="Avatar Tailwind CSS Component" />
                       </div>
                     </div>
@@ -81,9 +82,9 @@ const Mycart = () => {
                 <td>
                   {item.price}
                 </td>
-                <th>
+                <td>
                   <button onClick={()=>handleDelete(item)} className=" text-red-600 btn-sm"><FaTrashAlt size={20}></FaTrashAlt></button>
-                </th>
+                </td>
               </tr>)
         }
       
