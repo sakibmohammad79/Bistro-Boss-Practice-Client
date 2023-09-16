@@ -2,13 +2,15 @@ import { Helmet } from "react-helmet-async";
 import { FaBars, FaBook, FaCalendarAlt, FaHome, FaMap, FaShoppingCart, FaShuttleVan, FaUsers, FaUtensils, FaWallet } from "react-icons/fa";
 import { NavLink, Outlet } from "react-router-dom";
 import useCard from "../Hooks/useCard";
+import useAdmin from "../Hooks/useAdmin";
 
 
 const Dashboard = () => {
 const [cart] = useCard();
 
 //Todo
-const isAdmin = true;
+// const isAdmin = true;
+const [isAdmin] = useAdmin();
 
   return (
     <>
