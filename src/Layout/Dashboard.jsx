@@ -45,7 +45,8 @@ const [isAdmin] = useAdmin();
             <>
             <li><NavLink to='/dashboard/userhome'><FaHome></FaHome> User Home</NavLink></li>
             <li><NavLink to='/dashboard/reservations'><FaCalendarAlt></FaCalendarAlt> Reservations</NavLink></li>
-            <li><NavLink to='/dashboard/payment'><FaWallet></FaWallet> Payment History</NavLink></li>
+            <li><NavLink to='/dashboard/payment_history'><FaWallet></FaWallet> Payment History</NavLink></li>
+            <li><NavLink to='/dashboard/payment'><FaWallet></FaWallet> Payment</NavLink></li>
             <li><NavLink to='/dashboard/mycart'><div className="indicator">
             <span className="indicator-item badge badge-secondary">{cart?.length || +0}</span>
             <button className="btn btn-sm"><FaShoppingCart></FaShoppingCart></button>
