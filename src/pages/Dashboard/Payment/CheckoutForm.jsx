@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import useAxiosSecure from "../../../Hooks/useAxiosSecure";
 import useAuth from "../../../Hooks/useAuth";
 
-const CheckoutForm = ({ price }) => {
+const CheckoutForm = ({ cart, price }) => {
   const { user } = useAuth();
   const stripe = useStripe();
   const elements = useElements();
@@ -14,11 +14,13 @@ const CheckoutForm = ({ price }) => {
   const [transactionId, setTransectionId] = useState("");
 
   useEffect(() => {
-    axiosSecure.post("/create-payment-intent", { price }).then((res) => {
+    if(price > 0) {
+      axiosSecure.post("/create-payment-intent", { price }).then((res) => {
       console.log(res.data.clientSecret);
       setClientSecret(res.data.clientSecret);
     });
-  }, []);
+    }
+  }, [price, axiosSecure]);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -32,7 +34,7 @@ const CheckoutForm = ({ price }) => {
       return;
     }
 
-    const { error, paymentMethod } = await stripe.createPaymentMethod({
+    const { error } = await stripe.createPaymentMethod({
       type: "card",
       card,
     });
@@ -40,7 +42,7 @@ const CheckoutForm = ({ price }) => {
       console.log("error", error);
       setCardError(error.message);
     } else {
-      console.log("payment Method", paymentMethod);
+      //console.log("payment Method", paymentMethod);
       setCardError("");
     }
 
@@ -63,6 +65,32 @@ const CheckoutForm = ({ price }) => {
     setProcessing(false);
     if (paymentIntent.status === "succeeded") {
       setTransectionId(paymentIntent.id);
+
+      //save payment information
+      const payment = {
+        email: user?.email,
+        transactionId: paymentIntent.id,
+        price,
+        date: new Date(),
+        quantity: cart.length,
+        cartItems: cart.map(item => item._id),
+        menuItems: cart.map(item => item.menuItemId),
+        status: "sevice pending",
+        itemNames: cart.map(item => item.name) 
+      }
+      axiosSecure.post('/payments', payment)
+      .then(res => {
+        console.log(res.data)
+        if(res.data.result.insertedId) {
+          // Swal.fire({
+          //   position: 'top-end',
+          //   icon: 'success',
+          //   title: 'Your payment information successfully added!',
+          //   showConfirmButton: false,
+          //   timer: 1500
+          // })
+        }
+      })
     }
   };
 

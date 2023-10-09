@@ -35,7 +35,7 @@ const [isAdmin] = useAdmin();
           {
             isAdmin?
             <>
-            <li><NavLink to='/dashboard/userhome'><FaHome></FaHome> Admin Home</NavLink></li>
+            <li><NavLink to='/dashboard/adminhome'><FaHome></FaHome> Admin Home</NavLink></li>
             <li><NavLink to='/dashboard/additem'><FaUtensils></FaUtensils> Add Items</NavLink></li>
             <li><NavLink to='/dashboard/manageitems'><FaBars></FaBars> Manage All Items </NavLink></li>
             <li><NavLink to='/dashboard/reservations'><FaBook></FaBook> Manage Booking</NavLink></li>
