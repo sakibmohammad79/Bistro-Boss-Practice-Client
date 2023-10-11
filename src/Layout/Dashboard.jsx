@@ -38,14 +38,14 @@ const [isAdmin] = useAdmin();
             <li><NavLink to='/dashboard/adminhome'><FaHome></FaHome> Admin Home</NavLink></li>
             <li><NavLink to='/dashboard/additem'><FaUtensils></FaUtensils> Add Items</NavLink></li>
             <li><NavLink to='/dashboard/manageitems'><FaBars></FaBars> Manage All Items </NavLink></li>
-            <li><NavLink to='/dashboard/reservations'><FaBook></FaBook> Manage Booking</NavLink></li>
+            <li><NavLink to='/'><FaBook></FaBook> Manage Booking(Incomplete)</NavLink></li>
             <li><NavLink to='/dashboard/allusers'><FaUsers></FaUsers> All Users</NavLink></li>
             </> 
             :
             <>
             <li><NavLink to='/dashboard/userhome'><FaHome></FaHome> User Home</NavLink></li>
-            <li><NavLink to='/dashboard/reservations'><FaCalendarAlt></FaCalendarAlt> Reservations</NavLink></li>
-            <li><NavLink to='/dashboard/payment_history'><FaWallet></FaWallet> Payment History</NavLink></li>
+            <li><NavLink to='/'><FaCalendarAlt></FaCalendarAlt> Reservations(Incomplete)</NavLink></li>
+            <li><NavLink to='/'><FaWallet></FaWallet> Payment History(Incomplete)</NavLink></li>
             <li><NavLink to='/dashboard/payment'><FaWallet></FaWallet> Payment</NavLink></li>
             <li><NavLink to='/dashboard/mycart'><div className="indicator">
             <span className="indicator-item badge badge-secondary">{cart?.length || +0}</span>
